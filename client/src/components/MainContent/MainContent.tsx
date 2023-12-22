@@ -18,6 +18,7 @@ export default function MainContent() {
         />
         <span>{data?.user?.name}</span>
         <span>{data?.user?.email}</span>
+        <span>{data?.user.username}</span>
 
         <Button colorScheme="red" variant="outline" onClick={() => signOut()}>
           Sign out

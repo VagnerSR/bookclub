@@ -1,4 +1,4 @@
-import { Button, Center, Text, Stack, Input } from "@chakra-ui/react";
+import { Button, Center, Text, Stack, Input, useToast } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import googleLogo from "../../../public/googlelogo.png";
@@ -18,8 +18,9 @@ interface LoginProps {
 
 export default function Login({ session, reloadSession }: LoginProps) {
   const [username, setUsername] = useState("");
+  const toast = useToast();
 
-  const [createUsername, { data, loading, error }] = useMutation<
+  const [createUsername, { loading, error }] = useMutation<
     CreateUsernameData,
     CreateUsernameVariables
   >(UserOperations.Mutations.createUsername);
@@ -27,10 +28,45 @@ export default function Login({ session, reloadSession }: LoginProps) {
   const onSubmit = async () => {
     if (!username) return;
     try {
-      await createUsername({ variables: { username } });
-      console.log(data, loading, error)
-    } catch (error) {
-      console.log(error);
+      const { data } = await createUsername({ variables: { username } });
+
+      if (!data?.createUsername) {
+        throw new Error();
+      }
+
+      if (data.createUsername.error) {
+        const {
+          createUsername: { error },
+        } = data;
+
+        toast({
+          title: "Something went wrong!",
+          description: error,
+          status: "error",
+          duration: 3000,
+          position: "bottom",
+        });
+
+        return;
+      }
+
+      toast({
+        title: "Username successfully created!",
+        status: "success",
+        duration: 3000,
+        position: "bottom",
+      });
+
+      reloadSession();
+
+    } catch (error: any) {
+      toast({
+        title: "Something went wrong!",
+        description: error?.message,
+        status: "error",
+        duration: 3000,
+        position: "bottom",
+      });
     }
   };
 
@@ -64,6 +100,7 @@ export default function Login({ session, reloadSession }: LoginProps) {
               }
               colorScheme="messenger"
               onClick={() => signIn("google")}
+              variant="outline"
             >
               Sign in with Google
             </Button>
