@@ -1,29 +1,18 @@
-import { Button, Center, Stack } from "@chakra-ui/react";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import { Flex } from "@chakra-ui/react";
+import Club from "./Club/Club";
+import { Session } from "next-auth";
+import Feed from "./Feed/Feed";
 
-export default function MainContent() {
-  const { data } = useSession();
+interface MainContentProps {
+  session: Session;
+}
+
+export default function MainContent({ session }: MainContentProps) {
 
   return (
-    <Center height={"100vh"}>
-      <Stack align={"center"} spacing={4}>
-        <Image
-          className="rounded-full"
-          src={data?.user?.image!}
-          alt="user image"
-          width={100}
-          height={100}
-          priority
-        />
-        <span>{data?.user?.name}</span>
-        <span>{data?.user?.email}</span>
-        <span>{data?.user.username}</span>
-
-        <Button colorScheme="red" variant="outline" onClick={() => signOut()}>
-          Sign out
-        </Button>
-      </Stack>
-    </Center>
+    <Flex height={"100vh"}>
+      <Club session={session} />
+      <Feed session={session} />
+    </Flex>
   );
 }

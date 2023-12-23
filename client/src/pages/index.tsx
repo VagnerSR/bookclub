@@ -17,7 +17,7 @@ export default function Home() {
     <Box>
       <ToggleColorMode />
       {session?.user?.username ? (
-        <MainContent />
+        <MainContent session={session} />
       ) : (
         <Login session={session} reloadSession={reloadSession} />
       )}

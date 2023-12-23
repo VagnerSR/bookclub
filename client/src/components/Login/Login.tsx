@@ -81,13 +81,13 @@ export default function Login({ session, reloadSession }: LoginProps) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <Button onClick={onSubmit} colorScheme="messenger" width="100%">
+            <Button onClick={onSubmit} colorScheme="messenger" width="100%" isLoading={loading}>
               Save
             </Button>
           </>
         ) : (
           <>
-            <Text fontSize="3xl">BookClub Manager</Text>
+            <Text fontSize="3xl">BookClub</Text>
 
             <Button
               leftIcon={
