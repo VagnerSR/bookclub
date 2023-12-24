@@ -88,10 +88,10 @@ export default function ClubModal({
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent pb={4}>
-          <ModalHeader>Create a BookClub</ModalHeader>
+        <ModalContent pb={4} >
+          <ModalHeader >Create a BookClub</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody >
             <form onSubmit={onSubmit}>
               <Stack spacing={4}>
                 <Input
