@@ -24,6 +24,7 @@ import UserSearchList from "./UserSearchList";
 import Members from "./Members";
 import { CreateClubData, CreateClubInputs } from "../../../interfaces/Club";
 import { Session } from "next-auth";
+import { useRouter } from "next/router";
 
 interface ClubModalProps {
   isOpen: boolean;
@@ -35,7 +36,9 @@ export default function ClubModal({
   onClose,
   session,
 }: ClubModalProps) {
-  const { user: { id: userId } } = session;
+  const {
+    user: { id: userId },
+  } = session;
   const [username, setUsername] = useState("");
   const [members, setMembers] = useState<Array<SearchedUser>>([]);
   const [searchUsers, { data, loading, error }] = useLazyQuery<
@@ -46,6 +49,8 @@ export default function ClubModal({
     CreateClubData,
     CreateClubInputs
   >(ClubOperations.Mutations.createClub);
+
+  const router = useRouter();
 
   const toast = useToast();
 
@@ -72,7 +77,25 @@ export default function ClubModal({
           membersIds: membersId,
         },
       });
-      console.log(data)
+
+      if (!data?.createClub) {
+        toast({
+          title: "Failed to create club",
+          status: "error",
+          duration: 3000,
+          position: "bottom",
+        });
+      }
+
+      const clubId = data?.createClub.clubId;
+      
+      router.push({ query: { clubId } });
+
+      setMembers([]);
+      setUsername("");
+      onClose();
+
+      
     } catch (error: any) {
       toast({
         title: "Something went wrong!",
@@ -88,10 +111,10 @@ export default function ClubModal({
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent pb={4} >
-          <ModalHeader >Create a BookClub</ModalHeader>
+        <ModalContent pb={4}>
+          <ModalHeader>Create a BookClub</ModalHeader>
           <ModalCloseButton />
-          <ModalBody >
+          <ModalBody>
             <form onSubmit={onSubmit}>
               <Stack spacing={4}>
                 <Input

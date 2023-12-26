@@ -44,7 +44,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   clubs         ClubMember[]
-  admin         Club[]
   book          Book[]
 }
 
@@ -62,26 +61,27 @@ model Club {
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   members   ClubMember[]
-  adminId   String
-  admin     User         @relation(fields: [adminId], references: [id])
   books     Book[]
+  adminId   String
 }
 
 model ClubMember {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  clubId String
-  club   Club   @relation(fields: [clubId], references: [id])
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  clubId  String
+  club    Club   @relation(fields: [clubId], references: [id])
+  adminId String
+  haveRead  Boolean
 }
 
 model Book {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   clubId    String
   club      Club     @relation(fields: [clubId], references: [id])
-  haveRead  Boolean
 }
