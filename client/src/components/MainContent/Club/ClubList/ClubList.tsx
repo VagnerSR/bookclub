@@ -1,6 +1,6 @@
 import { Box, Button } from "@chakra-ui/react";
 import { Session } from "next-auth";
-import ClubModal from "../../Modal/ClubModal";
+import ClubModal from "../../Modal/ClubModal/ClubModal";
 import { useState } from "react";
 import { Club } from "../../../../interfaces/Club";
 import ClubItem from "./ClubItem";

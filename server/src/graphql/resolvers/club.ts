@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-server-core";
+import { GraphQLError } from "graphql";
 import { GraphQLContext } from "../../interfaces/GraphQLContext";
 import { Prisma } from "@prisma/client";
 import { ClubPopulated } from "../../interfaces/Club";
@@ -13,7 +13,7 @@ const resolvers = {
       const { session, prisma } = context;
 
       if (!session?.user) {
-        throw new ApolloError("Not authorized!");
+        throw new GraphQLError("Not authorized!");
       }
       const { user } = session;
 
@@ -36,7 +36,33 @@ const resolvers = {
         );
       } catch (error: any) {
         console.log(error);
-        throw new ApolloError(error);
+        throw new GraphQLError(error?.message);
+      }
+    },
+    clubById: async (
+      _: any,
+      args: { clubId: string },
+      context: GraphQLContext
+    ): Promise<any> => {
+      const { clubId: searchedClubId } = args;
+      const { session, prisma } = context;
+
+      if (!session?.user) {
+        throw new GraphQLError("Not authorized!");
+      }
+
+      try {
+        const club = await prisma.club.findUnique({
+          where: {
+            id: searchedClubId,
+          },
+          include: clubPopulated,
+        });
+
+        return club;
+      } catch (error: any) {
+        console.log(error);
+        throw new GraphQLError(error?.message);
       }
     },
   },
@@ -50,7 +76,7 @@ const resolvers = {
       const { session, prisma } = context;
 
       if (!session?.user) {
-        throw new ApolloError("Not authorized!");
+        throw new GraphQLError("Not authorized!");
       }
 
       const { user } = session;
@@ -77,7 +103,7 @@ const resolvers = {
         };
       } catch (error: any) {
         console.log(error);
-        throw new ApolloError("Error creating a club", error);
+        throw new GraphQLError("Error creating a club", error?.message);
       }
     },
   },

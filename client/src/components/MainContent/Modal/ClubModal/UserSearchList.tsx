@@ -1,5 +1,5 @@
 import { Avatar, Button, Flex, Stack, Text } from "@chakra-ui/react";
-import { SearchedUser } from "../../../interfaces/User";
+import { SearchedUser } from "../../../../interfaces/User";
 
 type UserSearchListProps = {
   users: Array<SearchedUser>;

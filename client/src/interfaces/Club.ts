@@ -19,7 +19,7 @@ export interface Club {
   adminId: string;
 }
 
-interface ClubMember {
+export interface ClubMember {
   id: string;
   user: User;
   haveRead: boolean;
@@ -27,4 +27,8 @@ interface ClubMember {
 
 export interface ClubData {
   clubs: Array<Club>
+}
+
+export interface SearchClubInputs {
+  clubId: string;
 }

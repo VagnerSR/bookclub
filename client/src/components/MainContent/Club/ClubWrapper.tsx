@@ -1,7 +1,7 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
-import ClubHeader from "./ClubHeader";
+import ClubContent from "./ClubContent/ClubContent";
 
 interface FeedProps {
   session: Session;
@@ -26,7 +26,7 @@ export default function Feed({ session }: FeedProps) {
           overflow="hidden"
           flexGrow={1}
         >
-          <ClubHeader userId={userId} clubId={clubId} />
+          <ClubContent userId={userId} clubId={clubId} session={session} />
         </Flex>
       ) : (
         <Flex>

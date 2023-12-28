@@ -12,17 +12,17 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
-import UserOperations from "../../../graphql/operations/user";
-import ClubOperations from "../../../graphql/operations/club";
+import UserOperations from "../../../../graphql/operations/user";
+import ClubOperations from "../../../../graphql/operations/club";
 import { useState } from "react";
 import {
   SearchUsersData,
   SearchUsersInputs,
   SearchedUser,
-} from "../../../interfaces/User";
+} from "../../../../interfaces/User";
 import UserSearchList from "./UserSearchList";
 import Members from "./Members";
-import { CreateClubData, CreateClubInputs } from "../../../interfaces/Club";
+import { CreateClubData, CreateClubInputs } from "../../../../interfaces/Club";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 

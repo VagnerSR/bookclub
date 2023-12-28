@@ -4,25 +4,46 @@ import { gql } from "@apollo/client";
 export default {
   Queries: {
     clubs: gql`
-    query Clubs {
-      clubs {
-        id
-        members {
-          user {
-            id
-            username
-            image
+      query Clubs {
+        clubs {
+          id
+          members {
+            user {
+              id
+              username
+              image
+            }
+            haveRead
           }
-          haveRead
+          adminId
+          books {
+            name
+          }
+          updatedAt
+          createdAt
         }
-        adminId
-        books {
-          name
-        }
-        updatedAt
-        createdAt
       }
-    }
+    `,
+    clubById: gql`
+      query ClubById {
+        clubs {
+          id
+          members {
+            user {
+              id
+              username
+              image
+            }
+            haveRead
+          }
+          adminId
+          books {
+            name
+          }
+          updatedAt
+          createdAt
+        }
+      }
     `,
   },
   Mutations: {

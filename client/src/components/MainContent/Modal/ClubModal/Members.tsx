@@ -1,5 +1,5 @@
 import { Button, Flex, Stack, Text } from "@chakra-ui/react";
-import { SearchedUser } from "../../../interfaces/User";
+import { SearchedUser } from "../../../../interfaces/User";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 
 type MembersProps = {

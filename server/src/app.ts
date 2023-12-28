@@ -1,8 +1,7 @@
-import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import { ApolloServer } from "@apollo/server"
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer"
 import { expressMiddleware } from "@apollo/server/express4";
 import express from "express";
-import { createServer } from "http";
 import { getSession } from "next-auth/react";
 import * as dotenv from "dotenv";
 import cors from "cors";
@@ -34,17 +33,23 @@ async function startApolloServer() {
     schema,
     csrfPrevention: true,
     cache: "bounded",
-    context: async ({ req }): Promise<GraphQLContext> => {
-      const session = await getSession({ req });
-
-      return { session: session as Session, prisma }
-    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
   await server.start();
 
-  server.applyMiddleware({ app, cors: corsOptions })
+  app.use(
+    "/graphql",
+    cors<cors.CorsRequest>(corsOptions),
+    json(),
+    expressMiddleware(server, {
+      context: async ({ req }): Promise<GraphQLContext> => {
+        const session = await getSession({ req });
+
+        return { session: session as Session, prisma };
+      },
+    })
+  );
 
   await new Promise<void>((resolve) => httpServer.listen({ port: 8080 }, resolve));
   console.log(`🚀 Server ready at http://localhost:8080/graphql`);

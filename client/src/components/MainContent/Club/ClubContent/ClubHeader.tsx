@@ -1,7 +1,7 @@
 import { Stack, Button, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { ClubData } from "../../../interfaces/Club";
-import ClubOperations from "../../../graphql/operations/club";
+import { ClubData } from "../../../../interfaces/Club";
+import ClubOperations from "../../../../graphql/operations/club";
 import { useQuery } from "@apollo/client";
 
 type ClubHeaderProps = {

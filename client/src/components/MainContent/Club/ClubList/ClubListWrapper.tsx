@@ -17,15 +17,20 @@ export default function Club({ session }: ClubProps) {
     loading: clubsLoading,
   } = useQuery<ClubData>(ClubOperations.Queries.clubs);
   const router = useRouter();
-
-  console.log(clubsData);
+  const { clubId } = router.query;
 
   async function onViewClub(clubId: string) {
     router.push({ query: { clubId } });
   }
 
   return (
-    <Box width={{ base: "100%", md: "400px" }} bg="whiteAlpha.50" py={6} px={3}>
+    <Box
+      display={{ base: clubId ? "none" : "flex", md: "flex" }}
+      width={{ base: "100%", md: "400px" }}
+      bg="whiteAlpha.50"
+      py={6}
+      px={3}
+    >
       <ClubList
         session={session}
         clubs={clubsData?.clubs || []}

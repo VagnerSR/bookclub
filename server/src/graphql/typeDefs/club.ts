@@ -36,6 +36,7 @@ const typeDefs = gql`
 
   type Query {
     clubs: [Club]
+    clubById(clubId: [String]): Club
   }
 `;
 

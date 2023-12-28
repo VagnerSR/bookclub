@@ -11,3 +11,17 @@ export interface Book {
   clubId: string;
   club: Club;
 }
+
+export interface CreateBookData {
+  createBook: {
+    success: boolean;
+    error: string;
+  };
+}
+
+export interface CreateBookVariables {
+  bookName: string;
+  author: string;
+  whoChose: string;
+  clubId: string;
+}
