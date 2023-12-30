@@ -67,6 +67,8 @@ export default function ClubContent({
               </Text>
             </Flex>
           ))}
+          </Stack>
+      )}
 
           <Box mb={4} borderRadius={4} cursor="pointer">
             <Button
@@ -81,14 +83,13 @@ export default function ClubContent({
 
           {bookData && <Book books={bookData.getBooks} />}
 
-          <BookModal
+          {club && <BookModal
             isOpen={isOpen}
             onClose={onClose}
             session={session}
             members={club.members}
-          />
-        </Stack>
-      )}
+          />}
+        
     </Stack>
   );
 }

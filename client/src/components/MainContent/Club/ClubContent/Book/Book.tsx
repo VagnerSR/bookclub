@@ -1,6 +1,6 @@
 import React from 'react'
 import { Book } from '../../../../../interfaces/Book'
-import { Stack, Text } from '@chakra-ui/react'
+import { Box, Heading, List, ListItem, Stack, Text, VStack } from '@chakra-ui/react'
 
 type BookProps = {
   books: Book[]
@@ -8,24 +8,30 @@ type BookProps = {
 
 export default function Book({ books }: BookProps) {
   return (
-    <Stack>
-      {books.map((book) => (
-        <Stack key={book.id}>
-        <Text>
-{book.name}
-        </Text>
-        <Text>
-{book.author}
-        </Text>
-        <Text>
-{book.whoChose}
-        </Text>
-
-        <Text>
-{book.whoRead}
-        </Text>
-        </Stack>
-      ))}
-    </Stack>
+    <Box mb={6}>
+        <Heading size="md" mb={2} color="teal.500">
+          Books:
+        </Heading>
+        <List>
+          {books.map((book) => (
+            <ListItem key={book.name} mb={4}>
+              <VStack align="start">
+                <Text fontSize="lg" fontWeight="bold">
+                  {book.name}
+                </Text>
+                <Text>
+                  <strong>Author:</strong> {book.author}
+                </Text>
+                <Text>
+                  <strong>Chosen by:</strong> {book.whoChose}
+                </Text>
+                <Text>
+                  <strong>Read by:</strong> {}
+                </Text>
+              </VStack>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
   )
 }
