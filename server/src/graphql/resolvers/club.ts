@@ -115,7 +115,6 @@ export const memberPopulated = Prisma.validator<Prisma.ClubMemberInclude>()({
       id: true,
       username: true,
       image: true,
-      book: true,
     },
   },
 });

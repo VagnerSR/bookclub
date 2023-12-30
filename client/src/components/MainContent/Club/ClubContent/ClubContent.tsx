@@ -6,13 +6,15 @@ import BookOperations from "../../../../graphql/operations/book";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
-  Book,
+  BookData,
+  BookInputs,
   CreateBookData,
   CreateBookVariables,
 } from "../../../../interfaces/Book";
 import { useState } from "react";
 import BookModal from "../../Modal/BookModal/BookModal";
 import { Session } from "next-auth";
+import Book from "./Book/Book";
 
 type ClubContentProps = {
   userId: string;
@@ -26,13 +28,19 @@ export default function ClubContent({
   session,
 }: ClubContentProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: clubData, loading: clubLoading } = useQuery<ClubData>(ClubOperations.Queries.clubs);
-  const { data: bookData, loading: bookLoading } = useQuery<any>(BookOperations.Queries.getBooks, {
+  const { data: clubData, loading: clubLoading } = useQuery<ClubData>(
+    ClubOperations.Queries.clubs
+  );
+  const { data: bookData, loading: bookLoading } = useQuery<
+    BookData,
+    BookInputs
+  >(BookOperations.Queries.getBooks, {
     variables: {
       clubId,
     },
   });
 
+  console.log(bookData?.getBooks);
   const router = useRouter();
 
   const club = clubData?.clubs.find((club) => club.id === clubId);
@@ -43,8 +51,6 @@ export default function ClubContent({
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
-
-  console.log(bookData)
 
   return (
     <Stack>
@@ -73,7 +79,14 @@ export default function ClubContent({
             </Button>
           </Box>
 
-          <BookModal isOpen={isOpen} onClose={onClose} session={session} members={club.members} />
+          {bookData && <Book books={bookData.getBooks} />}
+
+          <BookModal
+            isOpen={isOpen}
+            onClose={onClose}
+            session={session}
+            members={club.members}
+          />
         </Stack>
       )}
     </Stack>

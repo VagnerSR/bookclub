@@ -55,7 +55,7 @@ export default function BookModal({
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const foundMember = members.find((member) =>
-      member.user.username!.toLowerCase().includes(username)
+      member.user.username!.toLowerCase().includes(username.toLowerCase())
     );
     setUserBook(foundMember);
   }
@@ -68,7 +68,7 @@ export default function BookModal({
         variables: {
           bookName: book,
           author: author,
-          whoChose: userId,
+          whoChose: userBook?.user.username!,
           clubId: clubId as string,
         },
       });
@@ -124,7 +124,7 @@ export default function BookModal({
                 <Input
                   placeholder="Enter the author's name"
                   value={author}
-                  onChange={(e) => setBook(e.target.value)}
+                  onChange={(e) => setAuthor(e.target.value)}
                 />
                 <Input
                   placeholder="Enter username"

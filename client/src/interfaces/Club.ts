@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { Book } from "./Book"
+import { Book } from "./Book";
 export interface CreateClubData {
   createClub: {
     clubId: string;
@@ -26,7 +26,7 @@ export interface ClubMember {
 }
 
 export interface ClubData {
-  clubs: Array<Club>
+  clubs: Array<Club>;
 }
 
 export interface SearchClubInputs {

@@ -1,15 +1,18 @@
-import { User } from "@prisma/client";
-import { Club } from "./Club";
-
 export interface Book {
   id: string;
-  name?: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: User;
+  name: string;
+  author: string;
+  whoChose: string;
   clubId: string;
-  club: Club;
+  whoRead: string[];
+}
+
+export interface BookData {
+  getBooks: Array<Book>
+}
+
+export interface BookInputs {
+  clubId: string;
 }
 
 export interface CreateBookData {

@@ -14,19 +14,21 @@ const typeDefs = gql`
     club: Club
   }
 
-  type SearchedBook {
+  type BookData {
     id: String
     name: String
-    userId: String
+    author: String
+    whoChose: String
+    whoRead: [String]
     clubId: String
   }
 
   type Query {
-    getBooks(clubId: String): [SearchedBook]
+    getBooks(clubId: String): [BookData]
   }
 
   type Mutation {
-    createBook(bookName: String, clubId: String): CreateBookResponse
+    createBook(bookName: String, author: String, whoChose: String, clubId: String): CreateBookResponse
   }
 
   type CreateBookResponse {
