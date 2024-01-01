@@ -55,20 +55,7 @@ export default function ClubContent({
   return (
     <Stack>
       <ClubHeader userId={userId} clubId={clubId} />
-      {club && (
-        <Stack pl={4}>
-          <Text color="whiteAlpha.600">Members: </Text>
-          {club.members.map((member) => (
-            <Flex key={member.user.id} align="center" gap={4}>
-              <Avatar src={member.user.image!} />
-              <Text fontWeight={600}>{member.user.username}</Text>
-              <Text fontWeight={600}>
-                {member.haveRead ? "Read" : "Didn't read"}
-              </Text>
-            </Flex>
-          ))}
-          </Stack>
-      )}
+      
 
           <Box mb={4} borderRadius={4} cursor="pointer">
             <Button

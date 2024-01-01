@@ -1,4 +1,4 @@
-import { Stack, Button, Text } from "@chakra-ui/react";
+import { Stack, Button, Text, Avatar, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ClubData } from "../../../../interfaces/Club";
 import ClubOperations from "../../../../graphql/operations/club";
@@ -21,6 +21,7 @@ export default function ClubHeader({ userId, clubId }: ClubHeaderProps) {
 
   return (
     <Stack
+      ml={2}
       direction="row"
       align="center"
       spacing={6}
@@ -30,7 +31,6 @@ export default function ClubHeader({ userId, clubId }: ClubHeaderProps) {
       borderColor="whiteAlpha.200"
     >
       <Button
-        display={{ md: "none" }}
         onClick={() =>
           router.replace("?conversationId", "/", {
             shallow: true,
@@ -41,12 +41,15 @@ export default function ClubHeader({ userId, clubId }: ClubHeaderProps) {
       </Button>
       {!club && !loading && <Text>Conversation Not Found</Text>}
       {club && (
-        <Stack direction="row" pl={2}>
+        <Stack direction="row" pl={2} align="center">
           <Text color="whiteAlpha.600">Members: </Text>
           {club.members.map((member) => (
-            <Text key={member.user.id} fontWeight={600}>
-              {member.user.username}
-            </Text>
+            <Flex key={member.user.id}  align="center" gap={2}>
+              <Avatar src={member.user.image!} />
+
+              <Text fontWeight={600}>{member.user.username}</Text>
+              <Text>heve read</Text>
+            </Flex>
           ))}
         </Stack>
       )}
