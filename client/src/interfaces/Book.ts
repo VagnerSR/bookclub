@@ -2,6 +2,7 @@ export interface Book {
   id: string;
   name: string;
   author: string;
+  bookImage: string;
   whoChose: string;
   clubId: string;
   whoRead: string[];
@@ -25,6 +26,7 @@ export interface CreateBookData {
 export interface CreateBookVariables {
   bookName: string;
   author: string;
+  bookImage: string;
   whoChose: string;
   clubId: string;
 }

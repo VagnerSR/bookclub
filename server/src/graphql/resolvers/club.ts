@@ -69,10 +69,10 @@ const resolvers = {
   Mutation: {
     createClub: async (
       _: any,
-      args: { membersIds: Array<string> },
+      args: { membersIds: Array<string>; clubName: string },
       context: GraphQLContext
     ): Promise<{ clubId: string }> => {
-      const { membersIds } = args;
+      const { membersIds, clubName } = args;
       const { session, prisma } = context;
 
       if (!session?.user) {
@@ -94,6 +94,7 @@ const resolvers = {
               },
             },
             adminId: user.id,
+            clubName: clubName,
           },
           include: clubPopulated,
         });

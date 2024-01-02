@@ -29,8 +29,8 @@ export default function Feed({ session }: FeedProps) {
           <ClubContent userId={userId} clubId={clubId} session={session} />
         </Flex>
       ) : (
-        <Flex>
-          <Text>No club selected</Text>
+        <Flex justify={"center"} align={"center"} h={"100vh"}>
+          <Text fontSize={"2xl"}>No club selected</Text>
         </Flex>
       )}
     </Flex>

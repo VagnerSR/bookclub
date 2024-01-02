@@ -36,12 +36,11 @@ export default function BookModal({
   session,
   members,
 }: BookModalProps) {
-  const {
-    user: { id: userId },
-  } = session;
   const [username, setUsername] = useState("");
   const [book, setBook] = useState("");
+  
   const [author, setAuthor] = useState("");
+  const [bookImage, setBookImage] = useState("");
   const [userBook, setUserBook] = useState<ClubMember>();
   const [createBook, { loading: createBookLoading }] = useMutation<
     CreateBookData,
@@ -62,12 +61,14 @@ export default function BookModal({
 
   async function onCreateBook() {
     const { clubId } = router.query;
+    if (!book && !author && !userBook) return
 
     try {
       const { data } = await createBook({
         variables: {
           bookName: book,
           author: author,
+          bookImage: bookImage,
           whoChose: userBook?.user.username!,
           clubId: clubId as string,
         },
@@ -117,14 +118,19 @@ export default function BookModal({
             <form onSubmit={onSubmit}>
               <Stack spacing={4}>
                 <Input
-                  placeholder="Enter book name"
+                  placeholder="What's the book name"
                   value={book}
                   onChange={(e) => setBook(e.target.value)}
                 />
                 <Input
-                  placeholder="Enter the author's name"
+                  placeholder="What's the author's name"
                   value={author}
                   onChange={(e) => setAuthor(e.target.value)}
+                />
+                <Input
+                  placeholder="Copy the image url (optional)"
+                  value={bookImage}
+                  onChange={(e) => setBookImage(e.target.value)}
                 />
                 <Input
                   placeholder="Enter username"

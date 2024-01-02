@@ -37,12 +37,13 @@ const resolvers = {
       args: {
         bookName: string;
         author: string;
+        bookImage: string | null;
         whoChose: string;
         clubId: string;
       },
       context: GraphQLContext
     ): Promise<{}> => {
-      const { bookName, author, whoChose, clubId } = args;
+      const { bookName, author, bookImage, whoChose, clubId } = args;
       const { session, prisma } = context;
 
       if (!session?.user) {
@@ -54,6 +55,7 @@ const resolvers = {
           data: {
             name: bookName,
             author: author,
+            bookImage: bookImage,
             whoChose: whoChose,
             clubId: clubId,
           },

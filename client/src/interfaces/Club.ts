@@ -8,10 +8,12 @@ export interface CreateClubData {
 
 export interface CreateClubInputs {
   membersIds: Array<string>;
+  clubName: string;
 }
 
 export interface Club {
   id: string;
+  clubName: string;
   createdAt: string;
   updatedAt: string;
   members: ClubMember[];

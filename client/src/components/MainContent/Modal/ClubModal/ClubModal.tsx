@@ -39,6 +39,7 @@ export default function ClubModal({
   const {
     user: { id: userId },
   } = session;
+  const [clubName, setClubName] = useState("");
   const [username, setUsername] = useState("");
   const [members, setMembers] = useState<Array<SearchedUser>>([]);
   const [searchUsers, { data, loading, error }] = useLazyQuery<
@@ -70,10 +71,12 @@ export default function ClubModal({
 
   async function onCreateBookClub() {
     const membersId = [userId, ...members.map((member) => member.id)];
+    if (clubName.length === 0) return
 
     try {
       const { data } = await createClub({
         variables: {
+          clubName: clubName,
           membersIds: membersId,
         },
       });
@@ -112,11 +115,16 @@ export default function ClubModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent pb={4}>
-          <ModalHeader>Create a BookClub</ModalHeader>
+          <ModalHeader>Create a Book Club</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={onSubmit}>
               <Stack spacing={4}>
+              <Input
+                  placeholder="What's the name of the Club?"
+                  value={clubName}
+                  onChange={(e) => setClubName(e.target.value)}
+                />
                 <Input
                   placeholder="Enter username"
                   value={username}

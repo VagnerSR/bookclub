@@ -7,11 +7,12 @@ export default {
     getBooks: gql`
       query GetBooks {
         getBooks {
-          name
           id
-          clubId
-          whoChose
+          name
           author
+          bookImage
+          whoChose
+          clubId
         }
       }
     `,
@@ -21,12 +22,14 @@ export default {
       mutation CreateBook(
         $bookName: String!
         $author: String!
+        $bookImage: String
         $whoChose: String!
         $clubId: String!
       ) {
         createBook(
           bookName: $bookName
           author: $author
+          bookImage: $bookImage
           whoChose: $whoChose
           clubId: $clubId
         ) {

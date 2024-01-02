@@ -7,6 +7,7 @@ export default {
       query Clubs {
         clubs {
           id
+          clubName
           members {
             user {
               id
@@ -28,6 +29,7 @@ export default {
       query ClubById {
         clubs {
           id
+          clubName
           members {
             user {
               id
@@ -48,8 +50,8 @@ export default {
   },
   Mutations: {
     createClub: gql`
-      mutation CreateClub($membersIds: [String]!) {
-        createClub(membersIds: $membersIds) {
+      mutation CreateClub($membersIds: [String]!, $clubName: String!) {
+        createClub(membersIds: $membersIds, clubName: $clubName) {
           clubId
         }
       }

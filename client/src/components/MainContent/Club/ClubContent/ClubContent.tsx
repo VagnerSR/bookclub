@@ -68,7 +68,7 @@ export default function ClubContent({
             </Button>
           </Box>
 
-          {bookData && <Book books={bookData.getBooks} />}
+          {bookData && <Book clubId={clubId} books={bookData.getBooks} />}
 
           {club && <BookModal
             isOpen={isOpen}

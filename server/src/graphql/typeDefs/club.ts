@@ -4,7 +4,7 @@ const typeDefs = gql`
   scalar Date
 
   type Mutation {
-    createClub(membersIds: [String]): CreateClubResponse
+    createClub(membersIds: [String], clubName: String): CreateClubResponse
   }
 
   type CreateClubResponse {
@@ -27,6 +27,7 @@ const typeDefs = gql`
 
   type Club {
     id: String
+    clubName: String
     members: [Member]
     adminId: String
     createdAt: Date

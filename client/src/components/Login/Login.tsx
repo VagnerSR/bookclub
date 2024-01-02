@@ -10,6 +10,7 @@ import {
   CreateUsernameData,
   CreateUsernameVariables,
 } from "../../interfaces/User";
+import ToddleColorMode from "../ToddleColorMode/ToddleColorMode";
 
 interface LoginProps {
   session: Session | null;
@@ -72,6 +73,7 @@ export default function Login({ session, reloadSession }: LoginProps) {
 
   return (
     <Center height="100vh">
+      <ToddleColorMode />
       <Stack align="center" spacing={8}>
         {session ? (
           <>

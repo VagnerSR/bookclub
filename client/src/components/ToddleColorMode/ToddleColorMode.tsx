@@ -1,8 +1,10 @@
-import { Button } from "@chakra-ui/button";
-import { useColorMode } from "@chakra-ui/color-mode";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { Button, Flex, Text, useColorMode } from "@chakra-ui/react";
+import React from "react";
 
-const ToggleColorMode = () => {
+type Props = {};
+
+export default function ToddleColorMode({}: Props) {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Button
@@ -13,12 +15,16 @@ const ToggleColorMode = () => {
       m="1rem"
     >
       {colorMode === "dark" ? (
-        <SunIcon color="orange.200" />
+        <Flex gap={2} align={"center"}>
+          <Text>Light Mode</Text>
+          <SunIcon color="orange.200" />
+        </Flex>
       ) : (
-        <MoonIcon color="blue.700" />
+        <Flex gap={2} align={"center"}>
+          <Text>Dark Mode</Text>
+          <MoonIcon color="blue.700" />
+        </Flex>
       )}
     </Button>
   );
-};
-
-export default ToggleColorMode;
+}

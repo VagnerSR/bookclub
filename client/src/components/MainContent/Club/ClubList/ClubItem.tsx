@@ -1,5 +1,6 @@
-import { Button, Flex, Stack, Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { Club } from "../../../../interfaces/Club";
+import { ChatIcon } from "@chakra-ui/icons";
 
 type ClubItemProps = {
   club: Club;
@@ -9,10 +10,15 @@ type ClubItemProps = {
 
 export default function ClubItem({ club, onClick, isSelected }: ClubItemProps) {
   return (
-    <Button onClick={onClick}>
-      {club.members.map((member) => (
-        <Text key={member.user.id}>{member.user.username}</Text>
-      ))}
+    <Button
+      my={1}
+      leftIcon={<ChatIcon />}
+      onClick={onClick}
+      w={"100%"}
+      colorScheme="teal"
+      variant={isSelected ? "solid" : "outline"}
+    >
+      <Text> {club.clubName}</Text>
     </Button>
   );
 }

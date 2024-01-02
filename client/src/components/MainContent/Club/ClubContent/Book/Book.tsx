@@ -1,21 +1,41 @@
-import React from 'react'
-import { Book } from '../../../../../interfaces/Book'
-import { Box, Heading, List, ListItem, Stack, Text, VStack } from '@chakra-ui/react'
+import React from "react";
+import { Book } from "../../../../../interfaces/Book";
+import {
+  Box,
+  Flex,
+  Heading,
+  List,
+  ListItem,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import Image from "next/image";
 
 type BookProps = {
-  books: Book[]
-}
+  books: Book[];
+  clubId: string;
+};
 
-export default function Book({ books }: BookProps) {
+export default function Book({ books, clubId }: BookProps) {
+  const clubBooks = books.filter((book) => book.clubId === clubId);
+
   return (
-    <Box mb={6}>
-        <Heading size="md" mb={2} color="teal.500">
-          Books:
-        </Heading>
-        <List>
-          {books.map((book) => (
-            <ListItem key={book.name} mb={4}>
-              <VStack align="start">
+    <Flex gap={2}>
+      <Heading size="md" mb={2} color="teal.500">
+        Books:
+      </Heading>
+      <Flex gap={4}>
+        {clubBooks &&
+          clubBooks.map((book) => (
+            <Flex key={book.id} align="center" gap={2}>
+              <Image
+                priority
+                src={book.bookImage}
+                alt={`${book.name} cover`}
+                width={80}
+                height={20}
+              />
+              <Stack align="start">
                 <Text fontSize="lg" fontWeight="bold">
                   {book.name}
                 </Text>
@@ -28,10 +48,10 @@ export default function Book({ books }: BookProps) {
                 <Text>
                   <strong>Read by:</strong> {}
                 </Text>
-              </VStack>
-            </ListItem>
+              </Stack>
+            </Flex>
           ))}
-        </List>
-      </Box>
-  )
+      </Flex>
+    </Flex>
+  );
 }

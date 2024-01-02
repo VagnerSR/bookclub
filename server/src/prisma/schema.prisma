@@ -57,6 +57,7 @@ model VerificationToken {
 
 model Club {
   id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  clubName  String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   members   ClubMember[]
@@ -65,19 +66,20 @@ model Club {
 }
 
 model ClubMember {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
-  clubId  String
-  club    Club   @relation(fields: [clubId], references: [id])
-  adminId String
-  haveRead  Boolean
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String
+  user     User    @relation(fields: [userId], references: [id])
+  clubId   String
+  club     Club    @relation(fields: [clubId], references: [id])
+  adminId  String
+  haveRead Boolean
 }
 
 model Book {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  author    String?
+  name      String
+  author    String
+  bookImage String?
   whoChose  String?
   whoRead   String[]
   clubId    String
