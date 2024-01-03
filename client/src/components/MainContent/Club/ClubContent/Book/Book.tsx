@@ -21,10 +21,10 @@ export default function Book({ books, clubId }: BookProps) {
 
   return (
     <Flex gap={2}>
-      <Heading size="md" mb={2} color="teal.500">
+      <Heading size="md" mb={2} ml={2} color="teal.500">
         Books:
       </Heading>
-      <Flex gap={4}>
+      <Flex gap={4} wrap={"wrap"}>
         {clubBooks &&
           clubBooks.map((book) => (
             <Flex key={book.id} align="center" gap={2}>

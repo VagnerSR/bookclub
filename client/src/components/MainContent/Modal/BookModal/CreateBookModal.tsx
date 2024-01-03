@@ -24,18 +24,18 @@ import {
   CreateBookVariables,
 } from "../../../../interfaces/Book";
 
-interface BookModalProps {
+interface CreateBookModalProps {
   isOpen: boolean;
   onClose: () => void;
   session: Session;
   members: Array<ClubMember>;
 }
-export default function BookModal({
+export default function CreateBookModal({
   isOpen,
   onClose,
   session,
   members,
-}: BookModalProps) {
+}: CreateBookModalProps) {
   const [username, setUsername] = useState("");
   const [book, setBook] = useState("");
   

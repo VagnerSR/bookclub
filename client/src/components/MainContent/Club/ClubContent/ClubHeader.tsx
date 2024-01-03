@@ -41,17 +41,22 @@ export default function ClubHeader({ userId, clubId }: ClubHeaderProps) {
       </Button>
       {!club && !loading && <Text>Conversation Not Found</Text>}
       {club && (
-        <Stack direction="row" pl={2} align="center">
+        <Flex  gap={2} align="center">
+          
           <Text color="whiteAlpha.600">Members: </Text>
+          <Flex gap={2} wrap={"wrap"}>
           {club.members.map((member) => (
-            <Flex key={member.user.id}  align="center" gap={2}>
+            <Flex key={member.user.id} align="center" gap={2}>
               <Avatar src={member.user.image!} />
 
-              <Text fontWeight={600}>{member.user.username}</Text>
-              <Text>heve read</Text>
+              <Stack >
+                <Text fontWeight={600}>{member.user.username}</Text>
+                <Text fontSize={"small"}>{`Didn't read yet`}</Text>
+              </Stack>
             </Flex>
           ))}
-        </Stack>
+          </Flex>
+        </Flex>
       )}
     </Stack>
   );

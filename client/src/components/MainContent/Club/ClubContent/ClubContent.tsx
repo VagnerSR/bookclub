@@ -3,16 +3,14 @@ import ClubHeader from "./ClubHeader";
 import { ClubData } from "../../../../interfaces/Club";
 import ClubOperations from "../../../../graphql/operations/club";
 import BookOperations from "../../../../graphql/operations/book";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
   BookData,
   BookInputs,
-  CreateBookData,
-  CreateBookVariables,
 } from "../../../../interfaces/Book";
 import { useState } from "react";
-import BookModal from "../../Modal/BookModal/BookModal";
+import BookModal from "../../Modal/BookModal/CreateBookModal";
 import { Session } from "next-auth";
 import Book from "./Book/Book";
 
@@ -57,11 +55,10 @@ export default function ClubContent({
       <ClubHeader userId={userId} clubId={clubId} />
       
 
-          <Box mb={4} borderRadius={4} cursor="pointer">
+          <Box ml={2} mb={4} borderRadius={4} cursor="pointer">
             <Button
               textAlign="center"
               colorScheme="gray"
-              width={"100%"}
               onClick={onOpen}
             >
               Create a Book
