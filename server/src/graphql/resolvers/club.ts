@@ -126,7 +126,13 @@ export const clubPopulated = Prisma.validator<Prisma.ClubInclude>()({
   },
   books: {
     select: {
+      id: true,
       name: true,
+      author: true,
+      bookImage: true,
+      whoChose: true,
+      whoRead: true,
+      clubId: true
     },
   },
 });

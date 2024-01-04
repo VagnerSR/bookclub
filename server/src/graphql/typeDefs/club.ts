@@ -21,7 +21,10 @@ const typeDefs = gql`
   type Book {
     id: String
     name: String
-    userId: String
+    author: String
+    bookImage: String
+    whoChose: String
+    whoRead: [String]
     clubId: String
   }
 

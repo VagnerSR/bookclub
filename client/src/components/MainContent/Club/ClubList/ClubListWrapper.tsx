@@ -23,6 +23,8 @@ export default function Club({ session }: ClubProps) {
     router.push({ query: { clubId } });
   }
 
+  console.log(clubsData)
+
   return (
     <Stack
       display={{ base: clubId ? "none" : "flex", md: "flex" }}

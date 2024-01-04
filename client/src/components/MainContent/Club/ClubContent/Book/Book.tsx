@@ -1,14 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Book } from "../../../../../interfaces/Book";
-import {
-  Box,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 
 type BookProps = {
@@ -17,16 +9,28 @@ type BookProps = {
 };
 
 export default function Book({ books, clubId }: BookProps) {
-  const clubBooks = books.filter((book) => book.clubId === clubId);
+  const [randomBook, setRandomBook] = useState<Book>();
+
+  if (books.length === 0) {
+    return <Text>No books yet</Text>;
+  }
+
+  const rng = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+  function selectRandomBook(books: Book[]) {
+    const randomIndex = rng(0, books.length - 1);
+    setRandomBook(books[randomIndex]);
+  }
 
   return (
-    <Flex gap={2}>
-      <Heading size="md" mb={2} ml={2} color="teal.500">
+    <Stack gap={2} ml={2}>
+      <Heading size="md" mb={2} color="teal.500">
         Books:
       </Heading>
       <Flex gap={4} wrap={"wrap"}>
-        {clubBooks &&
-          clubBooks.map((book) => (
+        {books &&
+          books.map((book) => (
             <Flex key={book.id} align="center" gap={2}>
               <Image
                 priority
@@ -52,6 +56,21 @@ export default function Book({ books, clubId }: BookProps) {
             </Flex>
           ))}
       </Flex>
-    </Flex>
+      <Stack>
+        <Button w="300px" onClick={() => selectRandomBook(books)}>
+          Draw random book
+        </Button>
+        <Text>Selected book</Text>
+        {randomBook && (
+          <Image
+            priority
+            src={randomBook.bookImage}
+            alt={`${randomBook.name} cover`}
+            width={80}
+            height={20}
+          />
+        )}
+      </Stack>
+    </Stack>
   );
 }

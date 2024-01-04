@@ -18,7 +18,13 @@ export default {
           }
           adminId
           books {
+            id
             name
+            author
+            bookImage
+            whoChose
+            whoRead
+            clubId
           }
           updatedAt
           createdAt
@@ -40,7 +46,13 @@ export default {
           }
           adminId
           books {
+            id
             name
+            author
+            bookImage
+            whoChose
+            whoRead
+            clubId
           }
           updatedAt
           createdAt

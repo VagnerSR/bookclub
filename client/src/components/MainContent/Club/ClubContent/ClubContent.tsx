@@ -29,16 +29,7 @@ export default function ClubContent({
   const { data: clubData, loading: clubLoading } = useQuery<ClubData>(
     ClubOperations.Queries.clubs
   );
-  const { data: bookData, loading: bookLoading } = useQuery<
-    BookData,
-    BookInputs
-  >(BookOperations.Queries.getBooks, {
-    variables: {
-      clubId,
-    },
-  });
 
-  console.log(bookData?.getBooks);
   const router = useRouter();
 
   const club = clubData?.clubs.find((club) => club.id === clubId);
@@ -46,6 +37,8 @@ export default function ClubContent({
   if (clubData?.clubs && !clubLoading && !club) {
     router.replace("/");
   }
+
+  const bookData = club?.books
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
@@ -65,7 +58,7 @@ export default function ClubContent({
             </Button>
           </Box>
 
-          {bookData && <Book clubId={clubId} books={bookData.getBooks} />}
+          {bookData && <Book clubId={clubId} books={bookData} />}
 
           {club && <BookModal
             isOpen={isOpen}
