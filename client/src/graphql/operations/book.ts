@@ -13,6 +13,7 @@ export default {
           bookImage
           whoChose
           clubId
+          selectedBook
         }
       }
     `,

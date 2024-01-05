@@ -11,6 +11,7 @@ const typeDefs = gql`
     whoChose: String
     whoRead: [String]
     clubId: String
+    selectedBook: Boolean
   }
 
   type Query {

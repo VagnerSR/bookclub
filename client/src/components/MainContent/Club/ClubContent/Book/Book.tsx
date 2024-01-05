@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Book } from "../../../../../interfaces/Book";
 import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { Session } from "next-auth";
+import { Club } from "../../../../../interfaces/Club";
 
 type BookProps = {
   books: Book[];
-  clubId: string;
+  session: Session;
+  club: Club;
 };
 
-export default function Book({ books, clubId }: BookProps) {
+export default function Book({ books, session, club }: BookProps) {
   const [randomBook, setRandomBook] = useState<Book>();
 
   if (books.length === 0) {
@@ -57,9 +60,12 @@ export default function Book({ books, clubId }: BookProps) {
           ))}
       </Flex>
       <Stack>
-        <Button w="300px" onClick={() => selectRandomBook(books)}>
-          Draw random book
-        </Button>
+        {session.user.id === club.adminId && (
+          <Button w="300px" onClick={() => selectRandomBook(books)}>
+            Draw random book
+          </Button>
+        )}
+
         <Text>Selected book</Text>
         {randomBook && (
           <Image

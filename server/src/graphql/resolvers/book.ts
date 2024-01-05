@@ -58,6 +58,7 @@ const resolvers = {
             bookImage: bookImage,
             whoChose: whoChose,
             clubId: clubId,
+            selectedBook: false
           },
         });
 

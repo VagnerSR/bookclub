@@ -6,6 +6,7 @@ export interface Book {
   whoChose: string;
   clubId: string;
   whoRead: string[];
+  selectedBook: boolean;
 }
 
 export interface BookData {

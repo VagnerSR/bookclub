@@ -76,12 +76,13 @@ model ClubMember {
 }
 
 model Book {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  author    String
-  bookImage String?
-  whoChose  String?
-  whoRead   String[]
-  clubId    String
-  club      Club     @relation(fields: [clubId], references: [id])
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  author       String
+  bookImage    String?
+  whoChose     String?
+  whoRead      String[]
+  clubId       String
+  club         Club     @relation(fields: [clubId], references: [id])
+  selectedBook Boolean
 }
