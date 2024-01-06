@@ -2,13 +2,8 @@ import { Avatar, Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import ClubHeader from "./ClubHeader";
 import { ClubData } from "../../../../interfaces/Club";
 import ClubOperations from "../../../../graphql/operations/club";
-import BookOperations from "../../../../graphql/operations/book";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import {
-  BookData,
-  BookInputs,
-} from "../../../../interfaces/Book";
 import { useState } from "react";
 import BookModal from "../../Modal/BookModal/CreateBookModal";
 import { Session } from "next-auth";
@@ -38,8 +33,6 @@ export default function ClubContent({
     router.replace("/");
   }
 
-  const bookData = club?.books
-
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
 
@@ -58,7 +51,7 @@ export default function ClubContent({
             </Button>
           </Box>
 
-          {bookData && <Book session={session} books={bookData} club={club} />}
+          <Book session={session} club={club} />
 
           {club && <BookModal
             isOpen={isOpen}

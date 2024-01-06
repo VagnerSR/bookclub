@@ -39,5 +39,29 @@ export default {
         }
       }
     `,
+    selectBook: gql`
+      mutation SelectBook($bookId: String!) {
+        selectBook(bookId: $bookId) {
+          success
+          error
+        }
+      }
+    `,
+    unselectBook: gql`
+      mutation UnselectBook($bookId: String!) {
+        unselectBook(bookId: $bookId) {
+          success
+          error
+        }
+      }
+    `,
+    deleteBook: gql`
+      mutation DeleteBook($bookId: String!) {
+        deleteBook(bookId: $bookId) {
+          success
+          error
+        }
+      }
+    `,
   },
 };

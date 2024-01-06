@@ -25,6 +25,7 @@ export default {
             whoChose
             whoRead
             clubId
+            selectedBook
           }
           updatedAt
           createdAt

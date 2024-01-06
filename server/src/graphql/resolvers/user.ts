@@ -1,6 +1,5 @@
 import { GraphQLError } from "graphql";
-import { GraphQLContext } from "../../interfaces/GraphQLContext";
-import { CreateUsernameResponse } from "../../interfaces/User";
+import { GraphQLContext, ReturnResponse } from "../../interfaces/GraphQLContext";
 import { User } from "@prisma/client";
 
 const resolvers = {
@@ -45,7 +44,7 @@ const resolvers = {
       _: any,
       args: { username: string },
       context: GraphQLContext
-    ): Promise<CreateUsernameResponse> => {
+    ): Promise<ReturnResponse> => {
       const { username } = args;
       const { session, prisma } = context;
 

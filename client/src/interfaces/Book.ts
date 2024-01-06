@@ -13,9 +13,6 @@ export interface BookData {
   getBooks: Array<Book>
 }
 
-export interface BookInputs {
-  clubId: string;
-}
 
 export interface CreateBookData {
   createBook: {
@@ -24,10 +21,22 @@ export interface CreateBookData {
   };
 }
 
+export interface SelectBookData {
+  selectBook: {
+    success: boolean;
+    error: string;
+  };
+}
+
+
 export interface CreateBookVariables {
   bookName: string;
   author: string;
   bookImage: string;
   whoChose: string;
   clubId: string;
+}
+
+export interface BookOperationsVariables {
+  bookId: string;
 }

@@ -1,5 +1,8 @@
 import { GraphQLError } from "graphql";
-import { GraphQLContext } from "../../interfaces/GraphQLContext";
+import {
+  GraphQLContext,
+  ReturnResponse,
+} from "../../interfaces/GraphQLContext";
 import { Book } from "@prisma/client";
 
 const resolvers = {
@@ -42,7 +45,7 @@ const resolvers = {
         clubId: string;
       },
       context: GraphQLContext
-    ): Promise<{}> => {
+    ): Promise<ReturnResponse> => {
       const { bookName, author, bookImage, whoChose, clubId } = args;
       const { session, prisma } = context;
 
@@ -58,7 +61,7 @@ const resolvers = {
             bookImage: bookImage,
             whoChose: whoChose,
             clubId: clubId,
-            selectedBook: false
+            selectedBook: false,
           },
         });
 
@@ -66,6 +69,87 @@ const resolvers = {
       } catch (error: any) {
         console.log(error);
         throw new GraphQLError("Error creating a book", error);
+      }
+    },
+    selectBook: async (
+      _: any,
+      args: { bookId: string },
+      context: GraphQLContext
+    ): Promise<ReturnResponse> => {
+      const { bookId } = args;
+      const { session, prisma } = context;
+
+      if (!session?.user) {
+        throw new GraphQLError("Not authorized!");
+      }
+
+      try {
+        const book = await prisma.book.update({
+          where: {
+            id: bookId,
+          },
+          data: {
+            selectedBook: true,
+          },
+        });
+
+        return { success: true };
+      } catch (error: any) {
+        console.log(error);
+        throw new GraphQLError("Error selecting a book", error);
+      }
+    },
+    unselectBook: async (
+      _: any,
+      args: { bookId: string },
+      context: GraphQLContext
+    ): Promise<ReturnResponse> => {
+      const { bookId } = args;
+      const { session, prisma } = context;
+
+      if (!session?.user) {
+        throw new GraphQLError("Not authorized!");
+      }
+
+      try {
+        const book = await prisma.book.update({
+          where: {
+            id: bookId,
+          },
+          data: {
+            selectedBook: false,
+          },
+        });
+
+        return { success: true };
+      } catch (error: any) {
+        console.log(error);
+        throw new GraphQLError("Error unselecting a book", error);
+      }
+    },
+    deleteBook: async (
+      _: any,
+      args: { bookId: string },
+      context: GraphQLContext
+    ): Promise<ReturnResponse> => {
+      const { bookId } = args;
+      const { session, prisma } = context;
+
+      if (!session?.user) {
+        throw new GraphQLError("Not authorized!");
+      }
+
+      try {
+        const book = await prisma.book.delete({
+          where: {
+            id: bookId,
+          },
+        });
+
+        return { success: true };
+      } catch (error: any) {
+        console.log(error);
+        throw new GraphQLError("Error deleting a book", error);
       }
     },
   },

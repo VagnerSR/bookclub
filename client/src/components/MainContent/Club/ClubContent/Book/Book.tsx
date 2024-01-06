@@ -1,29 +1,75 @@
 import React, { useState } from "react";
-import { Book } from "../../../../../interfaces/Book";
-import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Book,
+  SelectBookData,
+  BookOperationsVariables,
+} from "../../../../../interfaces/Book";
+import { Button, Flex, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import Image from "next/image";
 import { Session } from "next-auth";
 import { Club } from "../../../../../interfaces/Club";
+import { useMutation } from "@apollo/client";
+import BookOperations from "../../../../../graphql/operations/book";
+import { ca } from "date-fns/locale";
 
 type BookProps = {
-  books: Book[];
   session: Session;
-  club: Club;
+  club?: Club;
 };
 
-export default function Book({ books, session, club }: BookProps) {
-  const [randomBook, setRandomBook] = useState<Book>();
+export default function Book({ session, club }: BookProps) {
+  const books = club?.books;
+  const toast = useToast();
 
-  if (books.length === 0) {
+  const [selectBook, { loading, error }] = useMutation<
+    SelectBookData,
+    BookOperationsVariables
+  >(BookOperations.Mutations.selectBook);
+
+  if (!club) return <></>;
+  if (!books || books!.length === 0) {
     return <Text>No books yet</Text>;
   }
+
+  const selectedBook = books!.filter((book) => book.selectedBook === true)[0];
 
   const rng = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
-  function selectRandomBook(books: Book[]) {
+
+  async function selectRandomBook(books: Book[]) {
     const randomIndex = rng(0, books.length - 1);
-    setRandomBook(books[randomIndex]);
+
+    try {
+      const { data } = await selectBook({
+        variables: {
+          bookId: books[randomIndex].id,
+        },
+      });
+
+      if (data?.selectBook.error) {
+        toast({
+          title: "Failed to selecting book",
+          status: "error",
+          duration: 3000,
+          position: "bottom",
+        });
+      } else {
+        toast({
+          title: `The book ${books[randomIndex].name} was selected`,
+          status: "success",
+          duration: 3000,
+          position: "bottom",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: error?.message,
+        status: "error",
+        duration: 3000,
+        position: "bottom",
+      });
+    }
   }
 
   return (
@@ -60,21 +106,23 @@ export default function Book({ books, session, club }: BookProps) {
           ))}
       </Flex>
       <Stack>
-        {session.user.id === club.adminId && (
+        {session.user.id === club.adminId && !selectedBook && (
           <Button w="300px" onClick={() => selectRandomBook(books)}>
             Draw random book
           </Button>
         )}
 
-        <Text>Selected book</Text>
-        {randomBook && (
-          <Image
-            priority
-            src={randomBook.bookImage}
-            alt={`${randomBook.name} cover`}
-            width={80}
-            height={20}
-          />
+        {selectedBook && (
+          <>
+            <Text>Selected book</Text>
+            <Image
+              priority
+              src={selectedBook.bookImage}
+              alt={`${selectedBook.name} cover`}
+              width={80}
+              height={20}
+            />
+          </>
         )}
       </Stack>
     </Stack>

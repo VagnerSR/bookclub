@@ -1,10 +1,5 @@
 import { ISODateString } from "next-auth";
 
-export interface CreateUsernameResponse {
-  success?: boolean;
-  error?: string;
-}
-
 export interface Session {
   user: User;
   expires: ISODateString;

@@ -20,6 +20,9 @@ const typeDefs = gql`
 
   type Mutation {
     createBook(bookName: String, author: String, bookImage: String, whoChose: String, clubId: String): CreateBookResponse
+    selectBook(bookId: String) : CreateBookResponse
+    unselectBook(bookId: String) : CreateBookResponse
+    deleteBook(bookId: String) : CreateBookResponse
   }
 
   type CreateBookResponse {
