@@ -61,6 +61,7 @@ export default function ClubModal({
   }
 
   function addMember(user: SearchedUser) {
+    if (members.find((member) => member.id === user.id)) return;
     setMembers((prev) => [...prev, user]);
     setUsername;
   }

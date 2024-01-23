@@ -10,7 +10,7 @@ import { Session } from "next-auth";
 import { Club } from "../../../../../interfaces/Club";
 import { useMutation } from "@apollo/client";
 import BookOperations from "../../../../../graphql/operations/book";
-import { ca } from "date-fns/locale";
+import EditBookModal from "../../../Modal/EditBookModal/EditBookModal";
 
 type BookProps = {
   session: Session;
@@ -20,6 +20,8 @@ type BookProps = {
 export default function Book({ session, club }: BookProps) {
   const books = club?.books;
   const toast = useToast();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const [selectBook, { loading, error }] = useMutation<
     SelectBookData,
@@ -72,15 +74,44 @@ export default function Book({ session, club }: BookProps) {
     }
   }
 
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
+
   return (
-    <Stack gap={2} ml={2}>
+    <Stack gap={2} w="100%" ml={4}>
+      <Stack>
+        {session.user.id === club.adminId && !selectedBook && (
+          <Button w="300px" onClick={() => selectRandomBook(books)}>
+            Draw random book
+          </Button>
+        )}
+
+        {selectedBook && (
+          <>
+            <Text>Selected book</Text>
+            <Image
+              priority
+              src={selectedBook.bookImage}
+              alt={`${selectedBook.name} cover`}
+              width={80}
+              height={20}
+            />
+          </>
+        )}
+      </Stack>
       <Heading size="md" mb={2} color="teal.500">
         Books:
       </Heading>
       <Flex gap={4} wrap={"wrap"}>
         {books &&
           books.map((book) => (
-            <Flex key={book.id} align="center" gap={2}>
+            <Flex
+              key={book.id}
+              align="center"
+              gap={2}
+              onClick={onOpen}
+              cursor="pointer"
+            >
               <Image
                 priority
                 src={book.bookImage}
@@ -102,29 +133,13 @@ export default function Book({ session, club }: BookProps) {
                   <strong>Read by:</strong> {}
                 </Text>
               </Stack>
+
+              <EditBookModal isOpen={isOpen} onClose={onClose} book={book} />
             </Flex>
           ))}
       </Flex>
-      <Stack>
-        {session.user.id === club.adminId && !selectedBook && (
-          <Button w="300px" onClick={() => selectRandomBook(books)}>
-            Draw random book
-          </Button>
-        )}
 
-        {selectedBook && (
-          <>
-            <Text>Selected book</Text>
-            <Image
-              priority
-              src={selectedBook.bookImage}
-              alt={`${selectedBook.name} cover`}
-              width={80}
-              height={20}
-            />
-          </>
-        )}
-      </Stack>
+      
     </Stack>
   );
 }

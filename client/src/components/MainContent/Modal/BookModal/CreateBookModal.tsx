@@ -112,7 +112,7 @@ export default function CreateBookModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent pb={4}>
-          <ModalHeader>Create a BookClub</ModalHeader>
+          <ModalHeader>Create a Book</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={onSubmit}>
