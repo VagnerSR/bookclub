@@ -152,6 +152,43 @@ const resolvers = {
         throw new GraphQLError("Error deleting a book", error);
       }
     },
+    markAsRead: async (
+      _: any,
+      args: { bookId: string },
+      context: GraphQLContext
+    ): Promise<ReturnResponse> => {
+      const { bookId } = args;
+      const { session, prisma } = context;
+      const username = session?.user.username;
+
+      if (!session?.user) {
+        throw new GraphQLError("Not authorized!");
+      }
+
+      try {
+        const book = await prisma.book.findUnique({
+          where: {
+            id: bookId,
+          },
+        });
+        const whoRead = book?.whoRead || [];
+
+        if (username) {
+          await prisma.book.update({
+            where: {
+              id: bookId,
+            },
+            data: {
+              whoRead: [...whoRead, username],
+            },
+          });
+        }
+        return { success: true };
+      } catch (error: any) {
+        console.log(error);
+        throw new GraphQLError("Error deleting a book", error);
+      }
+    },
   },
 };
 

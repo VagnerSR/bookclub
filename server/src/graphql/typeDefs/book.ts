@@ -23,6 +23,7 @@ const typeDefs = gql`
     selectBook(bookId: String) : CreateBookResponse
     unselectBook(bookId: String) : CreateBookResponse
     deleteBook(bookId: String) : CreateBookResponse
+    markAsRead(bookId: String) : CreateBookResponse
   }
 
   type CreateBookResponse {

@@ -63,5 +63,13 @@ export default {
         }
       }
     `,
+    markAsRead: gql`
+      mutation MarkAsRead($bookId: String!) {
+        markAsRead(bookId: $bookId) {
+          success
+          error
+        }
+      }
+    `,
   },
 };

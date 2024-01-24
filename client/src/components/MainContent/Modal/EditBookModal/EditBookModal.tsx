@@ -7,10 +7,18 @@ import {
   ModalBody,
   Stack,
   Text,
+  Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
-import { Book } from "../../../../interfaces/Book";
+import {
+  Book,
+  MarkAsReadData,
+  MarkAsReadVariables,
+} from "../../../../interfaces/Book";
 import Image from "next/image";
+import BookOperations from "../../../../graphql/operations/book";
+import { useMutation } from "@apollo/client";
 
 type EditBookModalProps = {
   isOpen: boolean;
@@ -23,6 +31,46 @@ export default function EditBookModal({
   onClose,
   book,
 }: EditBookModalProps) {
+  const [markAsRead, { loading }] = useMutation<
+    MarkAsReadData,
+    MarkAsReadVariables
+  >(BookOperations.Mutations.markAsRead);
+
+  const toast = useToast();
+
+  const onMarkAsRead = async () => {
+    try {
+      const { data } = await markAsRead({
+        variables: {
+          bookId: book.id,
+        },
+      });
+
+      if (data?.markAsRead.success) {
+        toast({
+          title: "Book marked as read",
+          status: "success",
+          duration: 3000,
+          position: "bottom",
+        });
+      } else {
+        toast({
+          title: "Something went wrong!",
+          status: "error",
+          duration: 3000,
+          position: "bottom",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Something went wrong!",
+        description: error?.message,
+        status: "error",
+        duration: 3000,
+        position: "bottom",
+      });
+    }
+  };
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,6 +87,7 @@ export default function EditBookModal({
                 width={80}
                 height={20}
               />
+              <Checkbox onClick={onMarkAsRead}>Mark as read</Checkbox>
               <Text fontSize="lg" fontWeight="bold">
                 {book.name}
               </Text>

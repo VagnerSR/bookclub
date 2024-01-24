@@ -28,6 +28,25 @@ export interface SelectBookData {
   };
 }
 
+export interface MarkAsReadData {
+  markAsRead: {
+    success: boolean;
+    error: string;
+  };
+}
+
+export interface UnselectBookData {
+  selectBook: {
+    success: boolean;
+    error: string;
+  };
+}
+
+export interface MarkAsReadVariables {
+  bookId: string;
+}
+
+
 
 export interface CreateBookVariables {
   bookName: string;
